@@ -1,28 +1,18 @@
 import throttle from 'lodash.throttle';
 
 const feedbackFormEl = document.querySelector('.feedback-form');
-const inputValues = {};
 const FIELDVALUES_KEY = 'feedback-form-state';
+let inputValues = JSON.parse(localStorage.getItem(FIELDVALUES_KEY)) || {};
 
-if (localStorage.getItem(FIELDVALUES_KEY)) {
-  try {
-    const parcedValues = JSON.parse(localStorage.getItem(FIELDVALUES_KEY));
+// Варіант зі знаходженням окремих елементів
+// const formInputEl = document.querySelector('input');
+// const formTextareaEl = document.querySelector('textarea');
+// formInputEl.value = inputValues.email;
+// formTextareaEl.value = inputValues.message;
 
-    // Варіант зі знаходженням окремих елементів
-    // const formInputEl = document.querySelector('input');
-    // const formTextareaEl = document.querySelector('textarea');
-    // formInputEl.value = parcedValues.email;
-    // formTextareaEl.value = parcedValues.message;
-
-    // Варіант з використанням властивості elements
-    feedbackFormEl.elements.email.value = parcedValues.email;
-    feedbackFormEl.elements.message.value = parcedValues.message;
-  } catch (error) {
-    console.log("Ой-вей, тут помилки, ось такі:");
-    console.log(error.name);
-    console.log(error.message);
-  }
-}
+// Варіант з використанням властивості elements
+feedbackFormEl.elements.email.value = inputValues.email || '';
+feedbackFormEl.elements.message.value = inputValues.message || '';
 
 function onInputHandler(event) {
   if (event.target.nodeName === 'INPUT') {
@@ -35,9 +25,10 @@ function onInputHandler(event) {
 
 function onFormSubmit(event) {
   event.preventDefault();
+  console.log(inputValues);
   localStorage.removeItem(FIELDVALUES_KEY);
   feedbackFormEl.reset();
-  console.log(inputValues);
+  inputValues = {};
 }
 
 feedbackFormEl.addEventListener('input', throttle(onInputHandler, 500));
