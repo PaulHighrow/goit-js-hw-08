@@ -8,16 +8,19 @@ if (localStorage.getItem(FIELDVALUES_KEY)) {
   try {
     const parcedValues = JSON.parse(localStorage.getItem(FIELDVALUES_KEY));
 
+    // Варіант зі знаходженням окремих елементів
     // const formInputEl = document.querySelector('input');
     // const formTextareaEl = document.querySelector('textarea');
     // formInputEl.value = parcedValues.email;
     // formTextareaEl.value = parcedValues.message;
 
+    // Варіант з використанням властивості elements
     feedbackFormEl.elements.email.value = parcedValues.email;
     feedbackFormEl.elements.message.value = parcedValues.message;
   } catch (error) {
-    console.log(error.name); 
-    console.log(error.message); 
+    console.log("Ой-вей, тут помилки, ось такі:");
+    console.log(error.name);
+    console.log(error.message);
   }
 }
 

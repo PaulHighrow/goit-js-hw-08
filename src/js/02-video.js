@@ -6,7 +6,6 @@ const player = new VimeoPlayer(PlayerEl);
 const PLAYERTIME_KEY = "videoplayer-current-time";
 
 function onTimeUpdate(data) {
-    console.log(data.duration, data.percent, data.seconds);
     localStorage.setItem(PLAYERTIME_KEY, data.seconds);
 }
 
